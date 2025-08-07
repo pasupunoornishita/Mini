@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card p-4">
+            <h2 class="text-center mb-4">Upload Image</h2>
+            <form method="POST" enctype="multipart/form-data" action="{{ url_for('upload') }}">
+                <div class="mb-3">
+                    <label for="file" class="form-label">Select Image</label>
+                    <input class="form-control" type="file" id="file" name="file" accept="image/*" required>
+                    <div class="form-text">Supported formats: JPG, PNG, GIF</div>
+                </div>
+                
+                <div class="mb-4">
+                    <h5>Processing Options</h5>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="process_objects" name="process_objects" checked>
+                        <label class="form-check-label" for="process_objects">
+                            Detect Objects (People, Cars, Animals, etc.)
+                        </label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="process_text" name="process_text" checked>
+                        <label class="form-check-label" for="process_text">
+                            Detect Text (Multiple Languages)
+                        </label>
+                    </div>
+                    <div class="mt-3">
+                        <label for="translate_to" class="form-label">Translate Text To:</label>
+                        <select class="form-select" id="translate_to" name="translate_to">
+                            <option value="en">English</option>
+                            <option value="hi">Hindi</option>
+                            <option value="afr">Afrikaans</option>
+                            <option value="amh">Amharic</option>
+                            <option value="ara">Arabic</option>
+                            <option value="asm">Assamese</option>
+                            <option value="aze">Azerbaijani</option>
+                            <option value="bel">Belarusian</option>
+                            <option value="ben">Bengali</option>
+                            <option value="bod">Tibetan</option>
+                            <option value="bos">Bosnian</option>
+                            <option value="bul">Bulgarian</option>
+                            <option value="cat">Catalan</option>
+                            <option value="ceb">Cebuano</option>
+                            <option value="ces">Czech</option>
+                            <option value="chi_sim">Chinese (Simplified)</option>
+                            <option value="chi_tra">Chinese (Traditional)</option>
+                            <option value="chr">Cherokee</option>
+                            <option value="cym">Welsh</option>
+                            <option value="dan">Danish</option>
+                            <option value="deu">German</option>
+                            <option value="ell">Greek</option>
+                            <option value="eng">English</option>
+                            <option value="est">Estonian</option>
+                            <option value="eus">Basque</option>
+                            <option value="fas">Persian</option>
+                            <option value="fin">Finnish</option>
+                            <option value="fra">French</option>
+                            <option value="glg">Galician</option>
+                            <option value="guj">Gujarati</option>
+                            <option value="hat">Haitian Creole</option>
+                            <option value="heb">Hebrew</option>
+                            <option value="hin">Hindi</option>
+                            <option value="hrv">Croatian</option>
+                            <option value="hun">Hungarian</option>
+                            <option value="ind">Indonesian</option>
+                            <option value="isl">Icelandic</option>
+                            <option value="ita">Italian</option>
+                            <option value="jav">Javanese</option>
+                            <option value="jpn">Japanese</option>
+                            <option value="kan">Kannada</option>
+                            <option value="kat">Georgian</option>
+                            <option value="kaz">Kazakh</option>
+                            <option value="khm">Khmer</option>
+                            <option value="kir">Kyrgyz</option>
+                            <option value="kor">Korean</option>
+                            <option value="kur">Kurdish</option>
+                            <option value="lao">Lao</option>
+                            <option value="lat">Latin</option>
+                            <option value="lav">Latvian</option>
+                            <option value="lit">Lithuanian</option>
+                            <option value="mal">Malayalam</option>
+                            <option value="mar">Marathi</option>
+                            <option value="mkd">Macedonian</option>
+                            <option value="mlt">Maltese</option>
+                            <option value="msa">Malay</option>
+                            <option value="mya">Burmese</option>
+                            <option value="nep">Nepali</option>
+                            <option value="nld">Dutch</option>
+                            <option value="nor">Norwegian</option>
+                            <option value="ori">Odia</option>
+                            <option value="pan">Punjabi</option>
+                            <option value="pol">Polish</option>
+                            <option value="por">Portuguese</option>
+                            <option value="pus">Pashto</option>
+                            <option value="ron">Romanian</option>
+                            <option value="rus">Russian</option>
+                            <option value="san">Sanskrit</option>
+                            <option value="sin">Sinhala</option>
+                            <option value="slk">Slovak</option>
+                            <option value="slv">Slovenian</option>
+                            <option value="spa">Spanish</option>
+                            <option value="sqi">Albanian</option>
+                            <option value="srp">Serbian</option>
+                            <option value="swa">Swahili</option>
+                            <option value="swe">Swedish</option>
+                            <option value="tam">Tamil</option>
+                            <option value="tel">Telugu</option>
+                            <option value="tgk">Tajik</option>
+                            <option value="tgl">Tagalog</option>
+                            <option value="tha">Thai</option>
+                            <option value="tur">Turkish</option>
+                            <option value="ukr">Ukrainian</option>
+                            <option value="urd">Urdu</option>
+                            <option value="uzb">Uzbek</option>
+                            <option value="vie">Vietnamese</option>
+                            <option value="yor">Yoruba</option>
+                            <option value="zho">Chinese</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary w-100">Process Image</button>
+            </form>
+            
+            <div class="mt-4">
+                <h5>Tips for Best Results:</h5>
+                <ul>
+                    <li>Use clear, well-lit images</li>
+                    <li>For text, ensure it's horizontal and not too small</li>
+                    <li>For landmarks, try to capture distinctive features</li>
+                    <li>Complex images may take longer to process</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

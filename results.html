@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <div class="card p-4">
+            <h2>Processing Results</h2>
+            <a href="{{ url_for('upload') }}" class="btn btn-primary">Process Another Image</a>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card p-4">
+            <h3 class="mb-4">Original Image</h3>
+            <img src="{{ url_for('uploaded_file', filename=results.original_image) }}" class="result-image">
+        </div>
+    </div>
+    
+    {% if results.object_image %}
+    <div class="col-md-6">
+        <div class="card p-4">
+            <h3 class="mb-4">Objects Detected</h3>
+            <img src="{{ url_for('uploaded_file', filename=results.object_image) }}" class="result-image">
+        </div>
+    </div>
+    {% endif %}
+    
+    {% if results.text_image %}
+    <div class="col-md-6 mt-4">
+        <div class="card p-4">
+            <h3 class="mb-4">Text Detected</h3>
+            <img src="{{ url_for('uploaded_file', filename=results.text_image) }}" class="result-image">
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+{% if results.objects %}
+<div class="row mb-4">
+    <div class="col">
+        <div class="card p-4">
+            <h3 class="mb-4">Detected Objects</h3>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Object</th>
+                            <th>Confidence</th>
+                            <th>Position</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for obj in results.objects %}
+                        <tr>
+                            <td>{{ obj.label }}</td>
+                            <td>{{ "%.2f"|format(obj.confidence * 100) }}%</td>
+                            <td>({{ obj.bbox[0] }}, {{ obj.bbox[1] }}) to ({{ obj.bbox[2] }}, {{ obj.bbox[3] }})</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if results.landmarks %}
+<div class="row mb-4">
+    <div class="col">
+        <div class="card p-4">
+            <h3 class="mb-4">Landmark Information</h3>
+            <div class="row">
+                {% for landmark in results.landmarks %}
+                <div class="col-md-6">
+                    <div class="card landmark-card">
+                        {% if landmark.image_url %}
+                        <img src="{{ landmark.image_url }}" class="card-img-top landmark-image" alt="{{ landmark.name }}">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ landmark.name }}</h5>
+                            <p class="card-text">{{ landmark.description }}</p>
+                            {% if landmark.wikipedia_url %}
+                            <a href="{{ landmark.wikipedia_url }}" target="_blank" class="btn btn-sm btn-outline-primary">Learn More</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if results.texts %}
+<div class="row mb-4">
+    <div class="col">
+        <div class="card p-4">
+            <h3 class="mb-4">Detected Text</h3>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Text</th>
+                            <th>Confidence</th>
+                            <th>Position</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for text in results.texts %}
+                            {% if text.bbox %}
+                                <tr>
+                                    <td>{{ text.text }}</td>
+                                    <td>{{ "%.2f"|format(text.confidence * 100) }}%</td>
+                                    <td>
+                                        {% for coord in text.bbox %}
+                                            ({{ coord[0] }}, {{ coord[1] }})
+                                            {% if not loop.last %}, {% endif %}
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <p>No bounding box information available</p>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if results.translated_texts %}
+<div class="row mb-4">
+    <div class="col">
+        <div class="card p-4">
+            <h3 class="mb-4">Translated Text</h3>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Original Text</th>
+                            <th>Translation ({{ results.translated_texts[0].language|upper }})</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for text in results.translated_texts %}
+                        <tr>
+                            <td>{{ text.original }}</td>
+                            <td>{{ text.translated }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

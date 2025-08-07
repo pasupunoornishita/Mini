@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero-section text-center">
+    <div class="container">
+        <h1 class="display-4 fw-bold mb-4">See and Understand the World Around You</h1>
+        <p class="lead mb-5">Upload any image to detect objects, recognize text in multiple languages, and get instant translations to your preferred language.</p>
+        {% if not current_user.is_authenticated %}
+            <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg me-3">Get Started</a>
+            <a href="{{ url_for('login') }}" class="btn btn-outline-light btn-lg">Login</a>
+        {% else %}
+            <a href="{{ url_for('upload') }}" class="btn btn-primary btn-lg">Upload Image</a>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row g-4 mb-5">
+    <div class="col-md-4">
+        <div class="card h-100 p-4 text-center">
+            <div class="feature-icon">
+                <i class="fas fa-object-group"></i>
+            </div>
+            <h3>Object Detection</h3>
+            <p>Identify objects in your images with advanced AI technology. Perfect for understanding scenes or identifying items.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 p-4 text-center">
+            <div class="feature-icon">
+                <i class="fas fa-font"></i>
+            </div>
+            <h3>Text Recognition</h3>
+            <p>Extract text from images in multiple languages, even from complex backgrounds or unusual fonts.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 p-4 text-center">
+            <div class="feature-icon">
+                <i class="fas fa-globe"></i>
+            </div>
+            <h3>Translation</h3>
+            <p>Instantly translate recognized text to your preferred language, breaking down language barriers.</p>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-6">
+        <div class="card p-4">
+            <h3 class="mb-4">How It Works</h3>
+            <ol class="list-group list-group-numbered">
+                <li class="list-group-item d-flex align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">Upload an image</div>
+                        From your device or camera
+                    </div>
+                </li>
+                <li class="list-group-item d-flex align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">Select processing options</div>
+                        Choose what you want to detect
+                    </div>
+                </li>
+                <li class="list-group-item d-flex align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">Get results</div>
+                        Objects, text, translations, and more
+                    </div>
+                </li>
+            </ol>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card p-4">
+            <h3 class="mb-4">Use Cases</h3>
+            <div class="alert alert-info">
+                <i class="fas fa-lightbulb me-2"></i> Travelers can understand foreign signs and menus
+            </div>
+            <div class="alert alert-info">
+                <i class="fas fa-lightbulb me-2"></i> Students can extract text from textbooks or notes
+            </div>
+            <div class="alert alert-info">
+                <i class="fas fa-lightbulb me-2"></i> Shoppers can identify products from images
+            </div>
+            <div class="alert alert-info">
+                <i class="fas fa-lightbulb me-2"></i> Historians can learn about landmarks in images
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

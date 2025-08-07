@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <div class="card p-4">
+            <h2>Welcome, {{ user.username }}!</h2>
+            <p class="lead">Ready to explore your images? Upload one to get started.</p>
+            <a href="{{ url_for('upload') }}" class="btn btn-primary">Upload Image</a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card h-100 p-4">
+            <h3 class="mb-4">Quick Guide</h3>
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i> For best text recognition, use clear images with horizontal text.
+            </div>
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i> Object detection works best with clear, well-lit photos.
+            </div>
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i> Landmark recognition currently supports famous global landmarks.
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card h-100 p-4">
+            <h3 class="mb-4">Recent Activity</h3>
+            <p>Account created: {{ user.created_at.strftime('%B %d, %Y') }}</p>
+            <p>Last login: Just now</p>
+            <div class="mt-auto">
+                <a href="{{ url_for('logout') }}" class="btn btn-outline-danger">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
